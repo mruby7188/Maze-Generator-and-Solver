@@ -32,6 +32,12 @@ public class KruskalMazeCarver implements MazeCarver {
         }
         Graph<Room, Wall> graph = new Graph<Room, Wall>(maze.getRooms(), walls);
 
+        for (Wall wall : maze.getWalls()) {
+            Wall temp = wall;
+            temp.resetDistanceToOriginal();
+            walls.add(temp);
+        }
+        
         return graph.findMinimumSpanningTree();
     }
 
