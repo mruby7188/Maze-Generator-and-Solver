@@ -90,10 +90,13 @@ public class ArrayDisjointSet<T> implements IDisjointSet<T> {
         }
         
         // assign new rank if tree being added is bigger or of equal size
-        
-        if (root1 <= root2) {
-            pointers[root1] = pointers[root2]--;
+       
+        if (pointers[root1] < pointers[root2] || (pointers[root1] == pointers[root2] && System.currentTimeMillis() % 2 == 0)) {
+            pointers[root2] = root1;
+            pointers[root1]--;
+        } else {
+        	pointers[root1] = root2;
+            pointers[root2]--;
         }
-        pointers[root2] = root1;
     }
 }

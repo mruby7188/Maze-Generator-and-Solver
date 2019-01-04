@@ -10,6 +10,7 @@ import misc.graphs.Graph;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import datastructures.concrete.KVPair;
 
 /*
  * On gitlab, while testing, this file will be overwritten by our tests.
@@ -188,7 +189,7 @@ public class TestProvidedGraph extends BaseTest {
         edges.add(edge("a", "c", 4));
         edges.add(edge("a", "d", 7));
         edges.add(edge("a", "g", 9));
-       
+      
         edges.add(edge("b", "c", 2));
 
         edges.add(edge("c", "d", 3));
@@ -388,5 +389,18 @@ public class TestProvidedGraph extends BaseTest {
         IList<SimpleEdge<String>> shortestPath = graph.findShortestPathBetween("a", "g");
         
         checkPathMatches(graph, 6, new String[] {"a", "b", "c", "f", "e", "g"});
+    }
+    
+    public void testKruskalLeavesEdgeLengths() {
+        Graph<String, SimpleEdge<String>> graph = this.buildDisconnectedGraph();
+        
+        IList<SimpleEdge<String>> shortestPath = graph.findShortestPathBetween("a", "g");
+        
+        assertEquals(shortestPath.get(0).weight, 1);
+        assertEquals(shortestPath.get(1).weight, 2);
+        assertEquals(shortestPath.get(2).weight, 0);
+        assertEquals(shortestPath.get(3).weight, 1);
+        assertEquals(shortestPath.get(4).weight, 2);
+
     }
 }
