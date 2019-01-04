@@ -6,6 +6,7 @@ import misc.BaseTest;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import java.util.*;
 
 /*
  * On gitlab, while testing, this file will be overwritten by our tests.
@@ -143,8 +144,24 @@ public class TestProvidedArrayDisjointSet extends BaseTest {
         } catch (IllegalArgumentException ex) {
             // All ok -- expected result
         }
+    }
+    
+    
+    @Test(timeout=SECOND)
+    public void testInternalSetStructure() {
+        String[] items = new String[] {"a", "b", "c", "d", "e"};
+        IDisjointSet<String> forest = this.createForest(items);
 
+        forest.union("a", "b");
+        forest.union("c", "d");
+        forest.union("d", "a");
+        for (char ch = 'a'; ch <= 'd'; ch++) {
+        	assertEquals(forest.findSet("a"), forest.findSet(Character.toString(ch)));
+        }
+        
         forest.union("e", "d");
-        check(forest, items, new int[] {4, 4, 4, 4, 4});
+        for (char ch = 'a'; ch <= 'e'; ch++) {
+        	assertEquals(forest.findSet("e"), forest.findSet(Character.toString(ch)));
+        }        
     }
 }

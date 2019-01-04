@@ -21,19 +21,16 @@ public class KruskalMazeCarver implements MazeCarver {
         //
         // In particular, if you call 'wall.setDistance()' at any point, make sure to
         // call 'wall.resetDistanceToOriginal()' on the same wall before returning.
-
-        Maze orig = maze;
         Random rand = new Random();
         
-        ISet<Wall> walls = new ChainedHashSet<Wall>();
-        
         for (Wall wall : maze.getWalls()) {
-            Wall temp = wall;
-            temp.setDistance(rand.nextDouble());
-            walls.add(temp);
+            wall.setDistance(rand.nextDouble());
         }
-        Graph<Room, Wall> graph = new Graph<Room, Wall>(maze.getRooms(), walls);
 
-        return graph.findMinimumSpanningTree();
+        ISet<Wall> mst = new Graph<Room, Wall>(maze.getRooms(), maze.getWalls()).findMinimumSpanningTree();
+        for (Wall wall : maze.getWalls()) {
+        	wall.resetDistanceToOriginal();
+        }
+        return mst;
     }
 }

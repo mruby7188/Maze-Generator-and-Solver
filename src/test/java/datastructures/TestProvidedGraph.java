@@ -388,5 +388,6 @@ public class TestProvidedGraph extends BaseTest {
         IList<SimpleEdge<String>> shortestPath = graph.findShortestPathBetween("a", "g");
         
         checkPathMatches(graph, 6, new String[] {"a", "b", "c", "f", "e", "g"});
+        
     }
 }
